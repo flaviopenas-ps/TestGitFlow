@@ -24,7 +24,7 @@ namespace TestBILite
 
         async Task SendDiscordMsg(string msg)
         {
-            /*var responseString = await "https://discord.com/api/webhooks/943096505970073642/TdWZTQJCt81ddsQl4Z9QeFiGids6NLQqlIb9nvWUvhe8gNTiyX23Zv4IYy97gTj1Flia"
+            /*var responseString = await ""
               .PostUrlEncodedAsync(new { content = msg }).ReceiveString();*/
         }
 
