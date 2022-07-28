@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TestBILite": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
