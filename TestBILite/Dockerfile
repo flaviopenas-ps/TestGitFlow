@@ -13,4 +13,4 @@ RUN dotnet build "TestBILite.csproj" -c Release -o /app/build
 
 FROM build AS Test
 WORKDIR "/src/TestBILite"
-CMD ["dotnet", "test"]
+ENTRYPOINT [ "../scripts/WaitAndRun.sh" ]
