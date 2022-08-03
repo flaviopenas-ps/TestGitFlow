@@ -13,5 +13,5 @@ RUN dotnet build "TestBILite.csproj" -c Release -o /app/build
 
 FROM build AS Test
 WORKDIR "/src/TestBILite"
-RUN ["chmod", "+", "../scripts/WaitAndRun.sh"]
+RUN ["chmod", "+x", "../scripts/WaitAndRun.sh"]
 ENTRYPOINT [ "../scripts/WaitAndRun.sh" ]
