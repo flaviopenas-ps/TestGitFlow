@@ -22,12 +22,6 @@ namespace TestBILite
             verPromo("https://www.worten.pt/gaming/xbox/jogos");
         }
 
-        async Task SendDiscordMsg(string msg)
-        {
-            /*var responseString = await ""
-              .PostUrlEncodedAsync(new { content = msg }).ReceiveString();*/
-        }
-
         void verPromo(string link)
         {
             webDriver.NavigateTo(link + "?seller_name=Worten");
@@ -57,11 +51,6 @@ namespace TestBILite
                     try
                     {
                         productsData.TryGetValue(name, out double value1);
-                        if ((price < (value1 / 5) * 4) && (price > 0))
-                        {
-                            var task = SendDiscordMsg("@everyone " + name + " desceu " + (100 - ((price * 100) / value1)).ToString("#.##") + "% relativamente ao preço anterior, preço actual na Worten " + price + "€\n https://www.worten.pt" + product.GetAttribute("data-category"));
-                            task.Wait();
-                        }
                     }
                     catch { }
                     productsData[name] = price;

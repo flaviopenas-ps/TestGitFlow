@@ -10,22 +10,24 @@ namespace TestBILite
 
         public void Dispose()
         {
+            //this is called after every test is done
             driverExtras.Dispose();
         }
 
         [Fact]
         public void Test1()
         {
+            //driverExtras.setBrowserType("firefox");
             PCDiga diga = new PCDiga(driverExtras);
-            //passo 2
-            //passo 3
-
+            Console.WriteLine("\n\nTest1 done\n\n");
         }
 
         [Fact]
         public void Test2()
         {
-            driverExtras.NavigateTo("http://192.168.1.66:4444/");
+            //driverExtras.setBrowserType("firefox");
+            driverExtras.NavigateTo("http://www.google.com/");
+            Console.WriteLine("\n\nTest2 done\n\n");
         }
     }
 }

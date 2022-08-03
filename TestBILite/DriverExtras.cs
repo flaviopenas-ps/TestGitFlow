@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -16,21 +17,45 @@ namespace TestBILite
     {
         RemoteWebDriver driver;
         WebDriverWait wait;
-        ChromeOptions options = new ChromeOptions();
-        bool isDisposed = false;
+        ChromeOptions chromeOptions = new ChromeOptions();
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        String browserType = "chrome";
+
+        bool isDisposed = true;
         public DriverExtras()
         {
-            options.AddAdditionalOption("se:recordVideo", true);
-            driver = new RemoteWebDriver(new Uri("http://selenium-hub:4444/"), options);
-            wait = new WebDriverWait(driver, new TimeSpan(0, 1, 0));
-            driver.Manage().Window.Maximize(); 
+            
         }
+
+        public void setBrowserType(string browserType)
+        {
+            this.browserType = browserType;
+        }
+
+        private void StartBrowserType()
+        {
+            if (browserType == "chrome")
+            {
+                chromeOptions = new ChromeOptions();
+                chromeOptions.AddAdditionalOption("se:recordVideo", true);
+                driver = new RemoteWebDriver(new Uri("http://selenium-hub:4444/"), chromeOptions.ToCapabilities(), TimeSpan.FromSeconds(240)); //remote driver
+            }
+            else if (browserType == "firefox")
+            {
+                firefoxOptions = new FirefoxOptions();
+                //firefoxOptions.AddAdditionalOption("se:recordVideo", true);
+                driver = new RemoteWebDriver(new Uri("http://selenium-hub:4444/"), firefoxOptions.ToCapabilities(), TimeSpan.FromSeconds(240)); //remote driver
+            }
+            wait = new WebDriverWait(driver, new TimeSpan(0, 1, 0));
+            driver.Manage().Window.Maximize();
+        }
+
 
         public void NavigateTo(string url)
         {
             if (isDisposed == true)
-            { 
-                driver = new RemoteWebDriver(new Uri("http://selenium-hub:4444/"), options);
+            {
+                StartBrowserType();
                 isDisposed = false;
             }
             driver.Navigate().GoToUrl(url);

@@ -1,40 +1,37 @@
 version: '3.4'
 services:
+
   chrome:
     image: selenium/node-chrome:4.3.0-20220624
     shm_size: 2gb
+    volumes:
+      - ./assets:/opt/selenium/assets
+      - ./config.toml:/opt/bin/config.toml
     depends_on:
       - selenium-hub
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2 #number of browsers
     networks: 
-      - ea_network
-
-  edge:
-    image: selenium/node-edge:4.3.0-20220624
-    shm_size: 2gb
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-    networks: 
-      - ea_network
-
+      - network1
+      
   firefox:
     image: selenium/node-firefox:4.3.0-20220624
     shm_size: 2gb
+    volumes:
+      - ./assets:/opt/selenium/assets
+      - ./config.toml:/opt/bin/config.toml
     depends_on:
       - selenium-hub
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2 #number of browsers
     networks: 
-      - ea_network
+      - network1
 
   selenium-hub:
     image: selenium/hub:4.3.0-20220624
@@ -44,7 +41,7 @@ services:
       - "4443:4443"
       - "4444:4444"
     networks: 
-      - ea_network
+      - network1
 
 
   test_bi_lite:
@@ -56,7 +53,7 @@ services:
     depends_on: 
       - selenium-hub
     networks: 
-      - ea_network
+      - network1
       
 networks: 
-   ea_network:
+   network1:
